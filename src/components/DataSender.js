@@ -1,6 +1,6 @@
 const sendDataToServer = async ({route,reqMethod,reqBody}) => {
   console.log('body = ',reqBody);
-    const url=`http://localhost:5000/${route}`;
+    const url=`https://my-activities-app.herokuapp.com/${route}`;
 
     const response = await fetch(url, {
       method:reqMethod, // *GET, POST, PUT, DELETE, etc.
@@ -19,7 +19,7 @@ const getDataFromServer = async ({route,id,query,skip,limit}) => {
     limit = limit ? limit : 0;
     query = query ? `${query}&skip=${skip}&limit=${limit}` : !id ? `?skip=${skip}&limit=${limit}` : '';
     id = id ? id : '';
-    const url=`http://localhost:5000/${route}/${id}${query}`;
+    const url=`https://my-activities-app.herokuapp.com/${route}/${id}${query}`;
     console.log('URL=',url);
     const response = await fetch(url);
     const res=await response.json();
