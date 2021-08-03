@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getDataFromServer,sendDataToServer } from "./DataSender";
 import { Map, Marker } from "pigeon-maps";
@@ -10,11 +10,11 @@ import {DeleteForever as DeleteForeverIcon, Edit as EditIcon} from '@material-ui
 import {Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,CircularProgress} from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 
+import LoginContext from "./LoginContext";
+
 const ShowActivity = () => {
-    const [loggedIn,setLoggedIn]=useState(true);
     const [open, setOpen] = useState(false);
-    
-    
+    const {isLoggedIn} = useContext(LoginContext);
     const history = useHistory();
 
     const classes = useStyles();
@@ -32,7 +32,7 @@ const ShowActivity = () => {
         }
     }
     useEffect(()=>{
-        setLoggedIn(true);//JFF
+
         const getData = async () => {
             setLoading(true);
             const resAct = await getDataFromServer({route:'activities',id:activityId});
@@ -89,7 +89,7 @@ const ShowActivity = () => {
                     <Chip clickable variant="outlined" color="primary" size="small" label={activityData.durationText} component={Link} to={`/activities/durations/${activityData.durationId}`} />
                 </Grid>
             </Grid>
-            {loggedIn && (<><Grid container spacing={4}>
+            {isLoggedIn && (<><Grid container spacing={4}>
                 <IconButton color="inherit" aria-label="Edit activity" component={Link} to={`/editactivity/${activityId}`} edge="start">
                     <EditIcon />
                 </IconButton>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import {useContext, useState, useEffect, useCallback } from 'react';
 //import useMyApi from "../hooks/useMyApi";
 import { sendDataToServer, getDataFromServer } from "./DataSender";
 import { Map, Draggable } from "pigeon-maps"
@@ -10,12 +10,17 @@ import useStyles from "../styles";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
+import LoginContext from "./LoginContext";
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 
 const ActivitiesEditor = () => {
+
+  const {isLoggedIn} = useContext(LoginContext);
+
   const classes = useStyles();
   const [open, setOpen] = useState(false);//snackbar
   const [snackBarMsg, setSnackBarMsg] = useState('');//snackbar
@@ -236,7 +241,7 @@ const ActivitiesEditor = () => {
   };
 
   if (loading)return <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>
-    
+  if (!isLoggedIn)return <div style={{display: 'flex', justifyContent: 'center'}}>No login</div>
 return (<>
   <Container maxWidth='md'>
     <Typography variant='h4' align='center' color='textPrimary' gutterBottom>

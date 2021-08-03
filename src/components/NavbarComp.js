@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import {useContext, useState } from 'react';
 import clsx from 'clsx';
-import {Typography, AppBar,IconButton, Drawer, List,ListItem, ListItemIcon,ListItemText,Divider, Toolbar} from '@material-ui/core';
+import {Typography, AppBar,IconButton, Drawer, List,ListItem, ListItemIcon,ListItemText,Divider, Toolbar,FormControlLabel,Switch} from '@material-ui/core';
 import {Menu as MenuIcon,ChevronLeft as ChevronLeftIcon,ChevronRight as ChevronRightIcon,FindInPage as FindInPageIcon,DirectionsRun as DirectionsRunIcon,LocationCity as LocationCityIcon,Explore as ExploreIcon,Category as CategoryIcon,AccessTime as AccessTimeIcon ,Subject as SubjectIcon} from '@material-ui/icons/';
 import {NoteAdd as NoteAddIcon, AddBox as AddBoxIcon, AddLocation as AddLocationIcon, PostAdd as PostAddIcon, AddPhotoAlternate as AddPhotoAlternateIcon, AlarmAdd as AlarmAddIcon} from '@material-ui/icons';
 import { useTheme } from '@material-ui/core/styles';
@@ -8,16 +8,18 @@ import useStyles from "../styles";
 
 import { Link as RouterLink } from "react-router-dom";
 
+import LoginContext from "./LoginContext";
+
 const NavbarComp = () => {
+  const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
-  const [loggedIn,setLoggedIn]=useState(true);
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
-    setLoggedIn(true);//just to remove warnings
   };
 
   const handleDrawerClose = () => {
@@ -101,7 +103,7 @@ classes={{
       <ListItemText primary="Duration" />
     </ListItem>
 </List>
-{loggedIn && (<><Divider />
+{isLoggedIn && (<><Divider />
   <List>
     <ListItem button component={RouterLink} to="/newactivity" >
       <ListItemIcon><AddBoxIcon/></ListItemIcon>
@@ -129,6 +131,8 @@ classes={{
     </ListItem>
 </List></>
 )}
+
+<FormControlLabel control={<Switch checked={isLoggedIn} onChange={()=>setIsLoggedIn(!isLoggedIn)} aria-label="login switch" />} />
 </Drawer></>
   )
 

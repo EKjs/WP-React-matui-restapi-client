@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import { Route } from "react-router-dom";
 import ActivitiesBrowser from "./components/ActivitiesBrowser";
 import MainPage from "./components/MainPage";
@@ -14,11 +15,15 @@ import useStyles from "./styles";
 import NavbarComp from "./components/NavbarComp";
 import ListBrowser from "./components/ListBrowser";
 
+import {LoginProvider} from './components/LoginContext'
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const value = { isLoggedIn, setIsLoggedIn };
 
   const classes = useStyles();
 
-  return (<>
+  return (<><LoginProvider value={value}>
   <CssBaseline/>
     <NavbarComp />
   <main>
@@ -62,6 +67,7 @@ function App() {
 
     </div>
   </main>
+  </LoginProvider>
     </>
   );
 }

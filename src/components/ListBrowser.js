@@ -1,12 +1,13 @@
 import { getDataFromServer,sendDataToServer } from "./DataSender";
 import Pagination from '@material-ui/lab/Pagination';
-import { useEffect, useState } from "react";
+import { useContext,useEffect, useState } from "react";
 import { Grid,Container, Typography,IconButton} from "@material-ui/core";
 import useStyles from "../styles";
 import { Link } from "react-router-dom";
 import {Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,CircularProgress} from '@material-ui/core';
 import {DeleteForever as DeleteForeverIcon, Edit as EditIcon} from '@material-ui/icons';
 import { useHistory } from "react-router-dom";
+import LoginContext from "./LoginContext";
 
 const pageInfos = {
     '/cities':{
@@ -47,7 +48,7 @@ const ListBrowser = ({match}) => {
     const [page,setPage]=useState(0);
     const [listOfItems,setListOfItems]=useState();
     const [loading,setLoading]=useState(true);
-    const [loggedIn,setLoggedIn]=useState(true);
+    const {isLoggedIn} = useContext(LoginContext);
 
     const [itemToDelete,setItemToDelete]=useState();
     const [open, setOpen] = useState(false);
@@ -65,7 +66,7 @@ const ListBrowser = ({match}) => {
     }
 
     useEffect(()=>{
-        setLoggedIn(true);
+
         const getData = async () => {
             const res = await getDataFromServer({route:pageInfos[match.path].route,limit:perPage,skip:perPage*page});
             setListOfItems(res);
@@ -87,7 +88,7 @@ const ListBrowser = ({match}) => {
                 {listOfItems.items.map((item,idx)=> 
                 <Grid item xs={6} sm={6} md={3} key={`lstKey${idx}`}>
                 <Link to={`/activities${match.path}/${item.id}`} className={classes.notALink} >{item[pageInfos[match.path].dbCol]}</Link>
-                {loggedIn && (<><br/>
+                {isLoggedIn && (<><br/>
                     <IconButton color="inherit" aria-label="Edit activity" component={Link} to={`/${pageInfos[match.path].editorRoute}/${item.id}`} edge="start">
                         <EditIcon />
                     </IconButton>
@@ -109,7 +110,7 @@ const ListBrowser = ({match}) => {
             </Grid>
         </Container>
 
-        {loggedIn && (<>            
+        {isLoggedIn && (<>            
             <Dialog open={open} onClose={()=>setOpen(false)} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
                 <DialogTitle id="alert-dialog-title">{"Confirmation required"}</DialogTitle>
             <DialogContent>

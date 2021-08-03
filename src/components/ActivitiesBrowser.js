@@ -7,7 +7,7 @@ import useStyles from "../styles";
 
 
 const ActivitiesBrowser = ({match}) => {
-/*     const [loggedIn,setLoggedIn]=useState(false); */
+
     const classes = useStyles();
     console.log(match);
     const perPage=6;

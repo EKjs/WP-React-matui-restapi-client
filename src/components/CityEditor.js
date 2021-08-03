@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext,useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useRouteMatch } from "react-router-dom";
 import { sendDataToServer, getDataFromServer } from "./DataSender";
@@ -6,12 +6,14 @@ import {Typography, Grid,Container,CircularProgress} from '@material-ui/core';
 import useStyles from "../styles";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import LoginContext from "./LoginContext";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
 
 const CityEditor = () => {
+    const {isLoggedIn} = useContext(LoginContext);
     const classes = useStyles();
     const curEditModePath="/editcity/:cityId";
     const match = useRouteMatch();
@@ -71,6 +73,7 @@ const CityEditor = () => {
     },[cityId,match.path])
 
     if (!regionsList)return <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>
+    if (!isLoggedIn)return <div style={{display: 'flex', justifyContent: 'center'}}>No login</div>
     return (<>
         <Container maxWidth='md'>
         <Typography variant='h4' align='center' color='textPrimary' gutterBottom>
