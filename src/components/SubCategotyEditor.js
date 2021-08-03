@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useRouteMatch } from "react-router-dom";
 import { sendDataToServer, getDataFromServer } from "./DataSender";
-import {Typography, Grid,Container} from '@material-ui/core';
+import {Typography, Grid,Container,CircularProgress} from '@material-ui/core';
 import useStyles from "../styles";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -69,7 +69,7 @@ const SubCategotyEditor = () => {
         getAllCategories()
     },[subCategoryId,match.path])
 
-    if (!categoriesList)return <p>Loading...</p>
+    if (!categoriesList)return <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>
     return (<>      <Container maxWidth='md'>
     <Typography variant='h4' align='center' color='textPrimary' gutterBottom>
         {subCategoryId && match.path===curEditModePath? 'Edit sub-category' : 'Add new sub-category'}

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Grid,Container, Typography,IconButton} from "@material-ui/core";
 import useStyles from "../styles";
 import { Link } from "react-router-dom";
-import {Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle} from '@material-ui/core';
+import {Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,CircularProgress} from '@material-ui/core';
 import {DeleteForever as DeleteForeverIcon, Edit as EditIcon} from '@material-ui/icons';
 import { useHistory } from "react-router-dom";
 
@@ -74,7 +74,7 @@ const ListBrowser = ({match}) => {
         getData();
     },[match,page])
 
-    if (loading)return <p>Loading...</p>
+    if (loading)return <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>
 
     return (<>
         <Container maxWidth='md'>

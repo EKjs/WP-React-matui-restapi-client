@@ -7,7 +7,7 @@ import {Typography, Grid,Container,Chip,IconButton} from '@material-ui/core';
 import Carousel from 'react-material-ui-carousel';
 import useStyles from "../styles";
 import {DeleteForever as DeleteForeverIcon, Edit as EditIcon} from '@material-ui/icons';
-import {Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle} from '@material-ui/core';
+import {Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,CircularProgress} from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 
 const ShowActivity = () => {
@@ -43,7 +43,7 @@ const ShowActivity = () => {
         getData();
     },[activityId]);
 
-    if (loading)return <p>Loading...</p>
+    if (loading)return <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>
     return (<Container maxWidth='md' className={classes.cardGrid} >
                 <Grid container spacing={4}>
                     <Grid item xs={12} sm={6} md={4}>

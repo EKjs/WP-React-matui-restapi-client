@@ -4,7 +4,7 @@ import { sendDataToServer, getDataFromServer } from "./DataSender";
 import { Map, Draggable } from "pigeon-maps"
 import { useRouteMatch } from "react-router-dom";
 import { useParams } from "react-router";
-import {Typography, Grid,Container} from '@material-ui/core';
+import {Typography, Grid,Container,CircularProgress} from '@material-ui/core';
 //import Pagination from '@material-ui/lab/Pagination';
 import useStyles from "../styles";
 import Snackbar from '@material-ui/core/Snackbar';
@@ -124,7 +124,7 @@ const ActivitiesEditor = () => {
     const res = await sendDataToServer({route:route,reqMethod:reqMethod,reqBody:{...activityData,coords:coords}});
 
     if (res.status===201){
-      setSnackBarMsg(`Added a new activity with ID ${res.data.id} and title = ${res.data.activityName}.`)
+      setSnackBarMsg(`Added a new activity with ID ${res.data.id} and title = ${res.data.activityName}.`);
     }else if (res.status===200){
       setSnackBarMsg(`Saved changes to activity with ID ${res.data.id} and title = ${res.data.activityName}.`);
     }else{
@@ -235,7 +235,7 @@ const ActivitiesEditor = () => {
     })
   };
 
-  if(loading)return (<>loading</>)
+  if (loading)return <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>
     
 return (<>
   <Container maxWidth='md'>
@@ -289,7 +289,7 @@ return (<>
         </Grid>
       </Grid>
   </Container>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           {snackBarMsg}
         </Alert>

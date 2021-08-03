@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ActListItem from "./ActListItem";
 import { getDataFromServer } from "./DataSender";
-import {Typography, Grid,Container} from '@material-ui/core';
+import {Typography, Grid,Container,CircularProgress} from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import useStyles from "../styles";
 
@@ -47,7 +47,7 @@ const ActivitiesBrowser = ({match}) => {
         getData();
     },[match,page])
 
-    if (loading)return <p>Loading...</p>
+    if (loading)return <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>
 
     return (<>
         <Container maxWidth='md'>
